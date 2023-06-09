@@ -1,6 +1,6 @@
 # java14
 
-Collections -> .of: creates an immutable data structure.
+Collections -> Factory Method of: creates an immutable data structure.
 ```
 // Before
 List<String> names = new ArrayList<>();
@@ -53,4 +53,37 @@ String longText = """
   one really long text one really long text
   one really long text one really long text
   """;
+```
+
+Switch Expression:
+```
+String nome = "Jardel";
+switch (nome){
+  case "Jardel" -> System.out.println( "Acertou o nome" );
+  case "Kuhn" -> System.out.println( "Acertou o sobrenome" );
+  default -> System.out.println( "Errou" );
+}
+```
+
+HTTP/2 Client API
+```
+public class Teste{
+  
+  public static void main(String[] args) throws Exception {
+    HttpClient httpClient = new HttpClient.newHttpClient();
+    HttpRequest httpRequest = HttpRequest.newBuilder( new URI("https://casadocodigo.com.br") ).GET().build();
+    
+    // Blocking request
+    HttpResponse<String> response = httpClient.send( httpRequest, BodyHandlers.ofString() );
+    
+    System.out.println( response.statusCode() );
+    System.out.println( response.body() );
+    System.out.println( response.version() );
+    
+    // Async request
+    httpClient.sendAsync( httpRequest, BodyHandlers.ofString() ) // sendAsync returns a CompletableFuture<HttpResponse<String>>
+              .whenComplete( ( success, throwable ) -> System.out.println( success.body() ) );
+  }
+
+}
 ```
